@@ -10,23 +10,27 @@ list(APPEND Caffe_LINKER_LIBS ${Boost_LIBRARIES})
 find_package(Threads REQUIRED)
 list(APPEND Caffe_LINKER_LIBS ${CMAKE_THREAD_LIBS_INIT})
 
+# ---[ Google-gflags
+#include("cmake/External/gflags.cmake")
+find_package(gflags REQUIRED CONFIG)
+include_directories(SYSTEM ${GFLAGS_INCLUDE_DIRS})
+list(APPEND Caffe_LINKER_LIBS ${GFLAGS_LIBRARIES})
+
 # ---[ Google-glog
-include("cmake/External/glog.cmake")
+#include("cmake/External/glog.cmake")
+find_package(glog REQUIRED CONFIG)
 include_directories(SYSTEM ${GLOG_INCLUDE_DIRS})
 list(APPEND Caffe_LINKER_LIBS ${GLOG_LIBRARIES})
 
-# ---[ Google-gflags
-include("cmake/External/gflags.cmake")
-include_directories(SYSTEM ${GFLAGS_INCLUDE_DIRS})
-list(APPEND Caffe_LINKER_LIBS ${GFLAGS_LIBRARIES})
+
 
 # ---[ Google-protobuf
 include(cmake/ProtoBuf.cmake)
 
 # ---[ HDF5
 find_package(HDF5 COMPONENTS HL REQUIRED)
-include_directories(SYSTEM ${HDF5_INCLUDE_DIRS} ${HDF5_HL_INCLUDE_DIR})
-list(APPEND Caffe_LINKER_LIBS ${HDF5_LIBRARIES} ${HDF5_HL_LIBRARIES})
+include_directories(SYSTEM ${HDF5_INCLUDE_DIRS})
+list(APPEND Caffe_LINKER_LIBS ${HDF5_LIBRARIES})
 
 # ---[ LMDB
 if(USE_LMDB)
