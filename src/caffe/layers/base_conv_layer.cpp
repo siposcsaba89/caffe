@@ -12,6 +12,14 @@
 #include "caffe/greentea/greentea_math_functions.hpp"
 #endif
 
+#ifdef min
+#undef min
+#endif
+
+#ifdef max
+#undef max
+#endif
+
 namespace caffe {
 
 template<typename Dtype>

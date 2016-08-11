@@ -6,7 +6,7 @@ if (NOT __GLOG_INCLUDED)
 
   # try the system-wide glog first
   find_package(Glog)
-  if (GLOG_FOUND)
+  if (Glog_FOUND)
       set(GLOG_EXTERNAL FALSE)
   else()
     # fetch and build glog from github

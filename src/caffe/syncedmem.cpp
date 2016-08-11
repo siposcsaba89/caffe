@@ -1,8 +1,9 @@
-#include "caffe/common.hpp"
-#include "caffe/greentea/greentea.hpp"
-#include "caffe/syncedmem.hpp"
 
 #include "../../include/caffe/device.hpp"
+#include "caffe/greentea/greentea.hpp"
+#include "caffe/syncedmem.hpp"
+#include "caffe/common.hpp"
+
 #include "caffe/util/math_functions.hpp"
 
 #ifdef USE_GREENTEA
@@ -24,6 +25,7 @@ namespace caffe {
 // it improved stability for large models on many GPUs.
 
 void CaffeMallocHost(void** ptr, int_tp size, device* device_context) {
+	caffe::ParamSpec::PERMISSIVE;
 #ifndef CPU_ONLY
   if (Caffe::mode() == Caffe::GPU) {
     if (device_context->backend() == BACKEND_CUDA) {
@@ -32,11 +34,20 @@ void CaffeMallocHost(void** ptr, int_tp size, device* device_context) {
       return;
 #endif  // USE_CUDA
     } else {
+#if WIN32
+		// Make sure the memory is zero-copy usable in OpenCL
+		*ptr = _aligned_malloc( OPENCL_PAGE_ALIGN,
+			((size - 1) / OPENCL_CACHE_ALIGN + 1) * OPENCL_CACHE_ALIGN);
+		CHECK_EQ(0, 0)
+			<< "Host memory allocation error of size: "
+			<< size << " B";
+#else
       // Make sure the memory is zero-copy usable in OpenCL
       CHECK_EQ(0, posix_memalign(ptr, OPENCL_PAGE_ALIGN,
               ((size - 1)/OPENCL_CACHE_ALIGN + 1) * OPENCL_CACHE_ALIGN))
                   << "Host memory allocation error of size: "
                   << size << " B";
+#endif
       return;
     }
   }

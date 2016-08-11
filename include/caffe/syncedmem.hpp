@@ -7,6 +7,14 @@
 #include "caffe/greentea/greentea.hpp"
 #include "caffe/util/math_functions.hpp"
 
+#ifdef min
+#undef min
+#endif
+
+#ifdef max
+#undef max
+#endif
+
 #define OPENCL_PAGE_ALIGN 4096
 #define OPENCL_CACHE_ALIGN 64
 
