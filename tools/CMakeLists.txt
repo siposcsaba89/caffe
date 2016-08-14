@@ -7,12 +7,12 @@ foreach(source ${srcs})
 
   # caffe target already exits
   if(name MATCHES "caffe")
-    set(name ${name}.bin)
+    set(name ${name}.exec)
   endif()
 
   # target
   add_executable(${name} ${source})
-  target_link_libraries(${name} ${Caffe_LINK})
+  target_link_libraries(${name} caffe)
   caffe_default_properties(${name})
 
   # set back RUNTIME_OUTPUT_DIRECTORY

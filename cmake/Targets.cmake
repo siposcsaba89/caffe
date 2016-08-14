@@ -61,6 +61,7 @@ function(caffe_pickup_caffe_sources root)
   caffe_source_group("Source\\Layers" GLOB "${root}/src/caffe/layers/*.cpp")
   caffe_source_group("Source\\Cuda"   GLOB "${root}/src/caffe/layers/*.cu")
   caffe_source_group("Source\\Cuda"   GLOB "${root}/src/caffe/util/*.cu")
+  
   caffe_source_group("Source\\Proto"  GLOB "${root}/src/caffe/proto/*.proto")
   caffe_source_group("Source"         GLOB "${root}/src/caffe/greentea*.cpp")
 
@@ -68,7 +69,7 @@ function(caffe_pickup_caffe_sources root)
   caffe_source_group("Include"      GLOB "${root}/include/caffe/test/test_*.h*")
   caffe_source_group("Source"       GLOB "${root}/src/caffe/test/test_*.cpp")
   caffe_source_group("Source\\Cuda" GLOB "${root}/src/caffe/test/test_*.cu")
-
+  
   # collect files
   file(GLOB test_hdrs    ${root}/include/caffe/test/test_*.h*)
   file(GLOB test_srcs    ${root}/src/caffe/test/test_*.cpp)
@@ -93,9 +94,9 @@ function(caffe_pickup_caffe_sources root)
   # OpenCL but not CUDA backend tweak
   if(USE_GREENTEA AND NOT USE_CUDA)
     SET_SOURCE_FILES_PROPERTIES(${cuda} PROPERTIES LANGUAGE CXX)
-    SET_SOURCE_FILES_PROPERTIES(${cuda} PROPERTIES COMPILE_FLAGS "-x c++")
+    #SET_SOURCE_FILES_PROPERTIES(${cuda} PROPERTIES COMPILE_FLAGS "-x c++")
     SET_SOURCE_FILES_PROPERTIES(${test_cuda} PROPERTIES LANGUAGE CXX)
-    SET_SOURCE_FILES_PROPERTIES(${test_cuda} PROPERTIES COMPILE_FLAGS "-x c++")
+    #SET_SOURCE_FILES_PROPERTIES(${test_cuda} PROPERTIES COMPILE_FLAGS "-x c++")
     list(APPEND srcs ${cuda})
     list(APPEND test_srcs ${test_cuda})
   endif()

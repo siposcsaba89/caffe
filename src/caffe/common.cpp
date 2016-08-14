@@ -81,7 +81,7 @@ void GlobalInit(int* pargc, char*** pargv) {
   // Google logging.
   ::google::InitGoogleLogging(*(pargv)[0]);
   // Provide a backtrace on segfault.
-  ::google::InstallFailureSignalHandler();
+  //::google::InstallFailureSignalHandler();
 }
 
 

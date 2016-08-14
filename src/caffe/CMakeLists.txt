@@ -4,7 +4,8 @@ caffe_protobuf_generate_cpp_py(${proto_gen_folder} proto_srcs proto_hdrs proto_p
 
 # include python files either to force generation
 add_library(proto STATIC ${proto_hdrs} ${proto_srcs} ${proto_python})
-target_link_libraries(proto libprotobuf)
+target_compile_definitions(proto PUBLIC -DBOOST_ALL_NO_LIB=1)
+target_link_libraries(proto protobuf::libprotobuf)
 #target_include_directories(proto PRIVATE ${PROTOBUF_INCLUDE_DIR})
 set(Caffe_LINKER_LIBS proto ${Caffe_LINKER_LIBS}) # note, crucial to prepend!
 caffe_default_properties(proto)
@@ -23,13 +24,13 @@ endif()
 
 add_library(caffe ${srcs})
 #message(FATAL_ERROR ${srcs})
-target_link_libraries(caffe proto ${Caffe_LINKER_LIBS} hdf5_hl-shared hdf5-shared libprotobuf)
+target_link_libraries(caffe PUBLIC proto ${Caffe_LINKER_LIBS} hdf5_hl-static hdf5-static protobuf::libprotobuf glog::glog)
 caffe_default_properties(caffe)
 set_target_properties(caffe PROPERTIES
     VERSION   ${CAFFE_TARGET_VERSION}
     SOVERSION ${CAFFE_TARGET_SOVERSION}
     )
-
+target_compile_definitions(caffe PUBLIC -DBOOST_ALL_NO_LIB=1)
 # ---[ Tests
  add_subdirectory(test)
 
