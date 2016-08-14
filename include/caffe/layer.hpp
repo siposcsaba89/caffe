@@ -15,6 +15,15 @@
 #include "caffe/greentea/greentea.hpp"
 #include "device.hpp"
 
+#ifdef min
+#undef min
+#endif
+
+#ifdef max
+#undef max
+#endif
+
+
 /**
  Forward declare boost::thread instead of including boost/thread.hpp
  to avoid a boost/NVCC issues (#1009, #1010) on OSX.

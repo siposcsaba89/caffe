@@ -10,6 +10,15 @@
 
 #include "caffe/layers/affinity_layer.hpp"
 
+#ifdef min
+#undef min
+#endif
+
+#ifdef max
+#undef max
+#endif
+
+
 namespace caffe {
 
 template<typename Dtype>

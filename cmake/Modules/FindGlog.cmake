@@ -22,11 +22,11 @@ else()
 endif()
 
 if(MSVC)
-    find_library(GLOG_LIBRARY_RELEASE libglog_static
+    find_library(GLOG_LIBRARY_RELEASE glog_static
         PATHS ${GLOG_ROOT_DIR}
         PATH_SUFFIXES Release)
-
-    find_library(GLOG_LIBRARY_DEBUG libglog_static
+     message(FATAL_ERROR ${GLOG_ROOT_DIR})
+    find_library(GLOG_LIBRARY_DEBUG glog_static_d
         PATHS ${GLOG_ROOT_DIR}
         PATH_SUFFIXES Debug)
 

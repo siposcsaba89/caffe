@@ -2,8 +2,8 @@ if (NOT __GFLAGS_INCLUDED) # guard against multiple includes
   set(__GFLAGS_INCLUDED TRUE)
 
   # use the system-wide gflags if present
-  find_package(GFlags)
-  if (GFLAGS_FOUND)
+  find_package(GFlags CONFIG)
+  if (GFlags_FOUND)
     set(GFLAGS_EXTERNAL FALSE)
   else()
     # gflags will use pthreads if it's available in the system, so we must link with it

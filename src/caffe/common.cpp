@@ -12,7 +12,9 @@
 
 #include "caffe/device.hpp"
 #include "caffe/util/rng.hpp"
-
+#if WIN32
+#include <process.h>
+#endif
 #if defined(USE_GREENTEA)
   #include "caffe/greentea/cl_kernels.hpp"  // NOLINT
   #if defined(USE_CLBLAS)
@@ -63,8 +65,11 @@ int64_t cluster_seedgen(void) {
   "using fallback algorithm to generate seed instead.";
   if (f)
     fclose(f);
-
+#if WIN32
+  pid = _getpid();
+#else
   pid = getpid();
+#endif
   s = time(NULL);
   seed = std::abs(((s * 181) * ((pid - 83) * 359)) % 104729);
   return seed;
